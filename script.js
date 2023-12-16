@@ -1,4 +1,6 @@
 let boxes = document.querySelectorAll(".box");
+let reset = document.querySelector("#reset-btn");
+let msg = document.querySelector(".msg");
 console.log(boxes)
 
 let turnO = true;
@@ -34,6 +36,44 @@ boxes.forEach((box)=>{
 
 const checkWinner = ()=>{
     for(let winning of winningSequence){
-        console.log(winning)
+        let firstVal = boxes[winning[0]].innerText
+        let seconVal = boxes[winning[1]].innerText
+        let thirdVal = boxes[winning[2]].innerText
+        if(firstVal !="" && seconVal !=""&& thirdVal !="" ){
+            if(firstVal == seconVal && seconVal==thirdVal)  {
+                console.log(firstVal+ " is a winner")
+                showWinner(firstVal)
+            }
+        }
     }
 }
+const showMessage = function(firstVal) {
+    msg.innerText = firstVal+ " is a winner"
+}
+const showWinner = function(firstVal){
+               disabledBoxes();
+               showMessage(firstVal)
+}
+const disabledBoxes = function(){
+    for(let box of boxes){
+        box.disabled =true;
+    }
+}
+const enabledBoxes = function(){
+    for(let box of boxes){
+        box.disabled =false;
+    }
+}
+
+const clearContent = function(){
+    for(let box of boxes){
+        box.innerText = '';
+    }
+    msg.innerText = '';
+}
+
+reset.addEventListener('click',function(){
+    turnO =true
+    clearContent()
+    enabledBoxes()
+})
